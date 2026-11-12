@@ -1,0 +1,128 @@
+mixin tex(center=false, paragraph=true)
+    if paragraph
+        p(style=center ? {'text-align': 'center' } : null)!= tex(`${block}`)
+    else
+        span(style=center ? {
+            'text-align': 'center',
+            'display': 'block',
+            'padding-top': '8px',
+            'padding-bottom': '8px',
+        } : null)!= tex(`${block}`)
+
+mixin tex2(center=false, paragraph=true)
+    p(style=center ? {
+        'text-align': 'center',
+        'display': 'block',
+        'padding-top': '8px',
+        'padding-bottom': '8px',
+    } : null)!= tex(`${block}`)
+
+mixin code
+    code!= highlight(`${block}`)
+
+//- Sane menu structure for UJICS subsites
+-
+  var menuItems = [
+    { id: 'ujics', title: 'ЄСІКС', url: 'https://uacourt.github.io/ujics/' },
+    { id: 'vkz', title: 'ВКЗ', url: 'https://uacourt.github.io/vkz/' },
+    { id: 'ai', title: 'ШІ', url: 'https://uacourt.github.io/ai/' },
+    { id: 'analytics', title: 'Аналітика', url: 'https://uacourt.github.io/analytics/' }
+  ]
+
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='x-ua-compatible' content='ie=edge')
+        meta(property='fb:app_id'      content='118554188236439')
+        meta(name='viewport'        content='width=device-width, initial-scale=1')
+        meta(name='author'          content='Maxim Sokhatsky')
+        meta(name='twitter:site'    content='@5HT')
+        meta(name='twitter:creator' content='@5HT')
+        meta(property='og:type'        content='website')
+        meta(property='og:image'       content='https://avatars.githubusercontent.com/u/17128096?s=400&u=66a63d4cdd9625b2b4b37d724cc00fe6401e5bd8&v=4')
+        meta(name='msapplication-TileColor' content='#ffffff')
+        meta(name='msapplication-TileImage' content='https://anders.groupoid.space/images/ms-icon-144x144.png')
+        meta(name='theme-color' content='#ffffff')
+
+        link(rel='stylesheet' href='main.css')
+        link(rel='apple-touch-icon' sizes='57x57'   href='https://anders.groupoid.space/images/apple-icon-57x57.png')
+        link(rel='apple-touch-icon' sizes='60x60'   href='https://anders.groupoid.space/images/apple-icon-60x60.png')
+        link(rel='apple-touch-icon' sizes='72x72'   href='https://anders.groupoid.space/images/apple-icon-72x72.png')
+        link(rel='apple-touch-icon' sizes='76x76'   href='https://anders.groupoid.space/images/apple-icon-76x76.png')
+        link(rel='apple-touch-icon' sizes='114x114' href='https://anders.groupoid.space/images/apple-icon-114x114.png')
+        link(rel='apple-touch-icon' sizes='120x120' href='https://anders.groupoid.space/images/apple-icon-120x120.png')
+        link(rel='apple-touch-icon' sizes='144x144' href='https://anders.groupoid.space/images/apple-icon-144x144.png')
+        link(rel='apple-touch-icon' sizes='152x152' href='https://anders.groupoid.space/images/apple-icon-152x152.png')
+        link(rel='apple-touch-icon' sizes='180x180' href='https://anders.groupoid.space/images//apple-icon-180x180.png')
+        link(rel='icon' type='image/png' sizes='192x192'  href='https://anders.groupoid.space/images/android-icon-192x192.png')
+        link(rel='icon' type='image/png' sizes='32x32'    href='https://anders.groupoid.space/images/favicon-32x32.png')
+        link(rel='icon' type='image/png' sizes='96x96'    href='https://anders.groupoid.space/images/favicon-96x96.png')
+        link(rel='icon' type='image/png' sizes='16x16'    href='https://anders.groupoid.space/images/favicon-16x16.png')
+        link(rel='manifest' href='https://anders.groupoid.space/images/manifest.json')
+
+        block title
+            title ЄСІКС
+
+        block head_extra
+
+        style.
+            svg a{fill:blue;stroke:blue}
+            [data-mml-node="merror"]>g{fill:red;stroke:red}
+            [data-mml-node="merror"]>rect[data-background]{fill:yellow;stroke:none}
+            [data-frame],[data-line]{stroke-width:70px;fill:none}
+            .mjx-dashed{stroke-dasharray:140}
+            .mjx-dotted{stroke-linecap:round;stroke-dasharray:0,140}
+            use[data-c]{stroke-width:3px}
+
+    body.content
+        block vars
+            - var activeMenu = 'ujics'
+            - var headerTitle = 'ЄСІКС'
+            - var headerSubtitle = 'Єдина Судова Інформаційно-комунікаційна Система'
+
+        nav
+            each item in menuItems
+                a(href=item.url class=(activeMenu === item.id ? 'active' : ''))= item.title
+
+        header.header
+            svg.header__logo(viewBox='0 0 660 930' fill='none' xmlns='http://www.w3.org/2000/svg')
+                defs
+                    radialGradient#shieldBg(cx='50%' cy='40%' r='60%' fx='50%' fy='30%')
+                        stop(offset='0%' stop-color='#0F388A')
+                        stop(offset='70%' stop-color='#051C4D')
+                        stop(offset='100%' stop-color='#010A21')
+                    linearGradient#goldGrad(x1='0%' y1='0%' x2='100%' y2='100%')
+                        stop(offset='0%' stop-color='#FFE885')
+                        stop(offset='35%' stop-color='#F7C425')
+                        stop(offset='70%' stop-color='#D49A00')
+                        stop(offset='100%' stop-color='#A37100')
+                path(d='m5 5h650v689c0 48-29 97-76 117l-251 105-251-105c-44-20-76-65-72-117z' fill='url(#shieldBg)' stroke='url(#goldGrad)' stroke-width='12' stroke-linejoin='round')
+                path(d='m25 25h610v650c0 40-24 82-64 99l-221 93-221-93c-37-17-64-55-60-99z' fill='none' stroke='url(#goldGrad)' stroke-width='2.5' stroke-dasharray='8 6' opacity='0.6')
+                g(opacity='0.85')
+                    path(d='M330 110 L330 750' stroke='url(#goldGrad)' stroke-width='18' stroke-linecap='round')
+                    path(d='M330 110 L330 750' stroke='#051C4D' stroke-width='2' opacity='0.5')
+                    path(d='M321 750 L330 770 L339 750 Z' fill='url(#goldGrad)')
+                    path(d='M240 180 L420 180' stroke='url(#goldGrad)' stroke-width='16' stroke-linecap='round')
+                    circle(cx='240' cy='180' r='10' fill='url(#goldGrad)')
+                    circle(cx='420' cy='180' r='10' fill='url(#goldGrad)')
+                    path(d='M330 180 L330 100' stroke='url(#goldGrad)' stroke-width='24' stroke-linecap='round')
+                    circle(cx='330' cy='90' r='18' fill='url(#goldGrad)')
+                    circle(cx='330' cy='90' r='8' fill='#051C4D')
+                    path(d='M140 280 C230 250, 430 250, 520 280' fill='none' stroke='url(#goldGrad)' stroke-width='10' stroke-linecap='round')
+                    circle(cx='330' cy='262' r='12' fill='url(#goldGrad)')
+                    path(d='M140 280 L100 450 M140 280 L180 450' stroke='url(#goldGrad)' stroke-width='2.5' opacity='0.8')
+                    path(d='M90 450 C90 490, 190 490, 190 450 Z' fill='url(#goldGrad)' stroke='url(#goldGrad)' stroke-width='3')
+                    path(d='M140 450 L140 470' stroke='url(#goldGrad)' stroke-width='4' stroke-linecap='round')
+                    path(d='M520 280 L480 450 M520 280 L560 450' stroke='url(#goldGrad)' stroke-width='2.5' opacity='0.8')
+                    path(d='M470 450 C470 490, 570 490, 570 450 Z' fill='url(#goldGrad)' stroke='url(#goldGrad)' stroke-width='3')
+                    path(d='M520 450 L520 470' stroke='url(#goldGrad)' stroke-width='4' stroke-linecap='round')
+                g(fill='url(#goldGrad)' style='filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.45))')
+                    path(d='m329 53c-6 4-2 396 0 401 12 43 29 81 48 112-104 31-63 146-48 287 7-12 17-21 28-28 43-34 70-81 79-132h133v-580c-148 88-132 213-148 361 59-10 75 76-3 83-92-149-59-257-59-419 0-37-9-62-30-85zm200 143v297h-22c-6-23-21-41-42-51 8-85 10-189 64-246zm-22 337h22v120h-89c0-19-3-39-8-58 36-4 68-29 75-62zm-114 71c4 16 6 33 6 49h-50c1-27 19-44 44-49zm-44 89h46c-7 31-23 61-46 85z')
+                    path(d='m331 53c6 4 2 396 0 401-12 43-29 81-48 112 104 31 63 146 48 287-7-12-17-21-28-28-43-34-70-81-79-132h-133v-580c148 88 132 213 148 361-59-10-75 76 3 83 92-149 59-257 59-419 0-37 9-62 30-85zm-200 143v297h22c6-23 21-41 42-51-8-85-10-189-64-246zm22 337h-22v120h89c0-19 3-39 8-58-36-4-68-29-75-62zm114 71c-4 16-6 33-6 49h50c-1-27-19-44-44-49zm44 89h-46c7 31 23 61 46 85z')
+            .header__titles
+                h1.header__title!= headerTitle
+                h4.header__subtitle!= headerSubtitle
+
+        block content
+
